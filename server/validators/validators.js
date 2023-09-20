@@ -10,3 +10,10 @@ export const loanValidation = Joi.object({
   terms: Joi.number().required(),
   amount: Joi.number().required().min(1000),
 })
+
+export const paymentValidation = Joi.object({
+  loanId: Joi.string().required(),
+  userId: Joi.string().required(),
+  payment_terms: Joi.number().required(),
+  payment_amount: Joi.number().required(),
+})

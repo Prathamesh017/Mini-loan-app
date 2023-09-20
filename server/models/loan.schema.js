@@ -37,6 +37,16 @@ const loanSchema = new mongoose.Schema(
       required: true,
       default: 'Pending',
     },
+    payment_terms_paid:{
+      type:Number,
+      required:true,
+      default:0,
+    },
+    payment_amount_paid:{
+      type:Number,
+      required:true,
+      default:0
+    }
   },
   {
     timestamps: true,

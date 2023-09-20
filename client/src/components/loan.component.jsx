@@ -2,11 +2,9 @@ import React from 'react'
 import { useState } from 'react'
 import PaymentForm from './form/payment-form.component'
 
-function LoanComponent({loans}) {
+function LoanComponent({ loans }) {
   const [showPaymentForm, setPaymentForm] = useState(false)
- 
-  
- 
+  const [selectedLoan, setSelectedLoan] = useState(null)
 
   return (
     <div className="w-full   mt-10 mx-auto p-4">
@@ -31,17 +29,27 @@ function LoanComponent({loans}) {
                   </p>
                 </div>
                 <div className="w-full mt-5 flex justify-between ">
-                  <p>Repayment Completed: 0/3 </p>
+                  <p>
+                    Repayment Completed: {loan.payment_terms_paid}/{loan.terms}{' '}
+                  </p>
                   <p>Payment Status:{loan.payment_status} </p>
                 </div>
                 <div className="mt-2">
-                  <p>Payment Paid:0</p>
+                  <p>Payment Paid:{loan.payment_amount_paid}</p>
                 </div>
                 <div className="mt-4">
                   <button
                     type="submit"
                     className="bg-[#4285F4] w-full border text-white hover:text-black p-1 md:p-2"
+                    //!TODO add Pending
+                    disabled={
+                      loan.payment_status === 'Paid' ||
+                      !loan.loan_status === 'Pending'
+                        ? true
+                        : false
+                    }
                     onClick={() => {
+                      setSelectedLoan(loan)
                       setPaymentForm(true)
                     }}
                   >
@@ -52,10 +60,13 @@ function LoanComponent({loans}) {
             )
           })
         )}
+        {showPaymentForm && (
+          <PaymentForm
+            loan={selectedLoan}
+            setPaymentForm={setPaymentForm}
+          ></PaymentForm>
+        )}
       </div>
-      {showPaymentForm && (
-        <PaymentForm setPaymentForm={setPaymentForm}></PaymentForm>
-      )}
     </div>
   )
 }

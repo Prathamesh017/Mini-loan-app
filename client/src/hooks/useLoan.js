@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useState } from 'react'
+
 const url = 'http://localhost:4000'
 function useLoan() {
   const [loans, setLoans] = useState([])
@@ -12,7 +13,6 @@ function useLoan() {
         },
       })
 
-      
       const updatedLoans = await getAllLoans()
       setLoans(updatedLoans)
       return
@@ -35,10 +35,27 @@ function useLoan() {
     }
   }
 
+  const updatePayment = async (data) => {
+    try {
+      const bearerToken = JSON.parse(localStorage.getItem('token'))
+      await axios.post(`${url}/v1/loan/payment`, data, {
+        headers: {
+          Authorization: `Bearer ${bearerToken}`,
+        },
+      })
+
+    
+      return
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return {
     loans,
     createLoan,
     getAllLoans,
+    updatePayment
   }
 }
 

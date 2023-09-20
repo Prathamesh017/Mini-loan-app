@@ -3,7 +3,6 @@ import LoanForm from '../components/form/loan-form.component'
 import { useState } from 'react'
 import LoanComponent from '../components/loan.component'
 import useLoan from '../hooks/useLoan'
-import useAuth from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
 
 function UserPage() {
@@ -15,7 +14,7 @@ function UserPage() {
   }
   useEffect(() => {
     getLoans()
-  }, [loans])
+  }, [])
 
   return (
     <div className="user-page-container w-full h-screen default-background">
