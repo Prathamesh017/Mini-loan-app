@@ -3,6 +3,7 @@ import cors from 'cors'
 import * as dotenv from 'dotenv'
 import connectDB from './config/database.js'
 import userRouter from './routes/user.router.js'
+import loanRouter from './routes/loan.router.js'
 
 const app = express()
 dotenv.config()
@@ -17,6 +18,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/v1/auth', userRouter)
+app.use('/v1/loan', loanRouter)
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

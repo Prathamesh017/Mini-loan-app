@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 
-const config = process.env
+
 
 // @description - authorize user with token
 const verifyToken = (req, res, next) => {
@@ -18,7 +18,7 @@ const verifyToken = (req, res, next) => {
         .json({ message: 'A token is required for authentication' })
     }
     try {
-      const decoded = jwt.verify(token, config.TOKEN_KEY)
+      const decoded = jwt.verify(token, process.env.JWT_SECRET)
       req.user = decoded
 
       next()

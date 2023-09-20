@@ -10,7 +10,6 @@ import {
 // @desc - login user
 export const loginUser = async (req, res) => {
   try {
-    console.log(req);
     const { error } = userRegisterValidation.validate(req.body)
     if (error) {
       return res.status(400).json({

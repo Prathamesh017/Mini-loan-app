@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import loanModel from '../models/loan.schema.js'
 // @description - to hash and secure password
 export const hashPassword = async (password) => {
   try {
@@ -28,4 +29,13 @@ export const generateToken = async (id) => {
   })
 
   return token
+}
+export const generateLoanId = async (userId) => {
+  try {
+    const orders = (await loanModel.find({ userId })).length + 1
+    const paddedCounter = String(orders).padStart(4, '0')
+    return `Loan-${paddedCounter}`
+  } catch (error) {
+    throw new Error(error)
+  }
 }

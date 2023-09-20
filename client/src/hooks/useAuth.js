@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 const url = 'http://localhost:4000'
 function useAuth() {
   const [operations, setOperations] = useState({
@@ -7,23 +8,30 @@ function useAuth() {
     isError: false,
     isCompleted: false,
   })
+  const navigate = useNavigate()
   const loginUser = async (data) => {
     try {
       const userData = await axios.post(`${url}/v1/auth/login`, data)
-      handleOperations('isCompleted',true)
+      handleOperations('isCompleted', true)
+      localStorage.setItem(
+        'token',
+        JSON.stringify(userData.data.data.access_token),
+      )
+      navigateTo('user')
       return userData.data
     } catch (error) {
-      handleOperations('isError',true)
+      handleOperations('isError', true)
       return error.response.data
     }
   }
   const registerUser = async (data) => {
     try {
       const userData = await axios.post(`${url}/v1/auth/register`, data)
-      setOperations((operation) => ({ ...operation, isCompleted: true }))
+      handleOperations('isCompleted', true)
+      navigateTo('user')
       return userData.data
     } catch (error) {
-      setOperations((operation) => ({ ...operation, isError: true }))
+      handleOperations('isError', true)
       return error.response.data
     }
   }
@@ -31,12 +39,18 @@ function useAuth() {
     console.log('admin')
   }
 
-  const handleOperations=(operationName,isOperation)=>{
-    const newOperations={ ...operations, [operationName]: isOperation }
+  const navigateTo = async (endpoint) => {
+    setTimeout(() => {
+      navigate(`/${endpoint}`)
+    }, 3000)
+  }
+
+  const handleOperations = (operationName, isOperation) => {
+    const newOperations = { ...operations, [operationName]: isOperation }
     setOperations(newOperations)
   }
-  const getOperations=()=>{
-    return operations;
+  const getOperations = () => {
+    return operations
   }
 
   return {
@@ -44,7 +58,8 @@ function useAuth() {
     registerUser,
     adminLogin,
     handleOperations,
-    getOperations
+    getOperations,
+    navigateTo
   }
 }
 

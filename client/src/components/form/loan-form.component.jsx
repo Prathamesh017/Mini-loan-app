@@ -1,21 +1,21 @@
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import useLoan from '../../hooks/useLoan.js'
 function LoanForm({ setLoan }) {
   const schema = yup.object().shape({
     employment: yup.string().required('Employment Status is required'),
-    term: yup.number().required('Loan Term is required'),
+    terms: yup.number().required('Loan Term is required'),
     amount: yup
       .number()
       .required('Amount is Required')
       .typeError('Amount must be a number')
       .min(1000),
 
-      salary: yup
+    salary: yup
       .number()
       .required('Salary is Required')
-      .typeError('Salary must be a number')
-      
+      .typeError('Salary must be a number'),
   })
 
   const {
@@ -26,17 +26,15 @@ function LoanForm({ setLoan }) {
   } = useForm({
     resolver: yupResolver(schema),
   })
-  function requestLoan() {
-    console.log('login')
-  }
+  const { createLoan } = useLoan()
 
   return (
     <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
       <div className="loan-form-background p-6 rounded-lg w-3/4 md:w-1/4 border border-red-700">
-      {/* Loan Form */}
+        {/* Loan Form */}
         <h2 className="text-2xl mb-4">Loan Form</h2>
         <div className="bg-white form  mt-2 md:mt-5 p-1 md:p-2">
-        {/* Employment Status */}
+          {/* Employment Status */}
           <div className="mb-3">
             <label>Employement Status</label>
             <br></br>
@@ -91,9 +89,9 @@ function LoanForm({ setLoan }) {
             <br></br>
             <div className="flex text-sm flex-col items-start text-slate-700">
               <select
-                {...register('term')}
+                {...register('terms')}
                 onChange={(e) =>
-                  setValue('term', e.target.value, {
+                  setValue('terms', e.target.value, {
                     shouldValidate: true,
                   })
                 }
@@ -107,8 +105,8 @@ function LoanForm({ setLoan }) {
                   )
                 })}
               </select>
-              {errors.term && (
-                <p className="text-red-700">{errors.term.message}</p>
+              {errors.terms && (
+                <p className="text-red-700">{errors.terms.message}</p>
               )}
             </div>
           </div>
@@ -128,13 +126,15 @@ function LoanForm({ setLoan }) {
               )}
             </div>
           </div>
-          
+
           <div className="w-full  grid grid-cols-2 gap-x-2 ">
             <div className="mt-5">
               <button
                 type="submit"
                 className="bg-[#ffd700]  w-full border text-white hover:text-black p-1 md:p-2"
-                onClick={handleSubmit(requestLoan)}
+                onClick={handleSubmit(async (data) => {
+                  await createLoan(data)
+                })}
               >
                 Submit
               </button>
