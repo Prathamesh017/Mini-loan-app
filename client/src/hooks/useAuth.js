@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-const url = 'http://localhost:4000'
+const url = 'https://mini-loan-server.onrender.com'
 function useAuth() {
   const [operations, setOperations] = useState({
     isLoading: false,

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react'
 
-const url = 'http://localhost:4000'
+const url = 'https://mini-loan-server.onrender.com'
 function useLoan() {
   const [loans, setLoans] = useState([])
   const createLoan = async (data) => {
