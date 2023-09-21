@@ -13,10 +13,8 @@ function useAuth() {
     try {
       const userData = await axios.post(`${url}/v1/auth/login`, data)
       handleOperations('isCompleted', true)
-      localStorage.setItem(
-        'token',
-        JSON.stringify(userData.data.data.access_token),
-      )
+      handleLocalStorage(userData.data.data.access_token)
+      
       navigateTo('user')
       return userData.data
     } catch (error) {
@@ -28,6 +26,7 @@ function useAuth() {
     try {
       const userData = await axios.post(`${url}/v1/auth/register`, data)
       handleOperations('isCompleted', true)
+      handleLocalStorage(userData.data.data.access_token)
       navigateTo('user')
       return userData.data
     } catch (error) {
@@ -35,8 +34,17 @@ function useAuth() {
       return error.response.data
     }
   }
-  const adminLogin = async () => {
-    console.log('admin')
+  const adminLogin = async (data) => {
+    try {
+      const userData = await axios.post(`${url}/v1/auth/admin`, data)
+      handleOperations('isCompleted', true)
+      navigateTo('admin')
+      handleLocalStorage(userData.data.data.access_token)
+      return userData.data
+    } catch (error) {
+      handleOperations('isError', true)
+      return error.response.data
+    }
   }
 
   const navigateTo = async (endpoint) => {
@@ -52,6 +60,9 @@ function useAuth() {
   const getOperations = () => {
     return operations
   }
+  const handleLocalStorage = (token) => {
+    localStorage.setItem('token', JSON.stringify(token))
+  }
 
   return {
     loginUser,
@@ -59,7 +70,7 @@ function useAuth() {
     adminLogin,
     handleOperations,
     getOperations,
-    navigateTo
+    navigateTo,
   }
 }
 

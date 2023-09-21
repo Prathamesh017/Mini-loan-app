@@ -12,9 +12,6 @@ function useLoan() {
           Authorization: `Bearer ${bearerToken}`,
         },
       })
-      await getAllLoans()
-      // const updatedLoans = await getAllLoans()
-      // setLoans(updatedLoans)
       return
     } catch (error) {
       console.log(error)

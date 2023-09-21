@@ -17,3 +17,13 @@ export const paymentValidation = Joi.object({
   payment_terms: Joi.number().required(),
   payment_amount: Joi.number().required(),
 })
+
+export const loanApprovalValidation = Joi.object({
+  loanId: Joi.string().required(),
+  userId: Joi.string().required(),
+  loan_status: Joi.string().required(),
+})
+
+
+
+

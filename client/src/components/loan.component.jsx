@@ -44,7 +44,7 @@ function LoanComponent({ loans,setFetchData }) {
                     //!TODO add Pending
                     disabled={
                       loan.payment_status === 'Paid' ||
-                      !loan.loan_status === 'Pending'
+                      loan.loan_status === 'Pending'
                         ? true
                         : false
                     }

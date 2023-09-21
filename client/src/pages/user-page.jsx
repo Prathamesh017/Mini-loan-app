@@ -7,9 +7,9 @@ import { useNavigate } from 'react-router-dom'
 
 function UserPage() {
   const [showLoan, showSetLoan] = useState(false)
-  const { loans, getAllLoans} = useLoan()
   const [fetchData,setFetchData]=useState(false)
   const navigate = useNavigate()
+  const { loans, getAllLoans} = useLoan()
   async function getLoans() {
     await getAllLoans()
     

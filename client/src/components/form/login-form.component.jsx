@@ -101,7 +101,10 @@ function Form() {
           type="submit"
           className="bg-[#64B5F6] w-full border hover:text-white text-black p-1 md:p-2"
           onClick={handleSubmit(async (data) => {
-            adminLogin(data)
+            handleOperations("isLoading",true)
+            const userData=await adminLogin(data)
+            setUserData(userData)
+            handleOperations("isLoading",false)
           })}
         >
           Admin Login

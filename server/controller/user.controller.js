@@ -41,7 +41,7 @@ export const loginUser = async (req, res) => {
           email: user.email,
           access_token: token,
         },
-        message:"Login Successfully"
+        message: 'Login Successfully',
       })
     }
   } catch (err) {
@@ -104,6 +104,63 @@ export const registerUser = async (req, res) => {
 // @api - v1/auth/admin POST
 // @desc - admin user
 // !TODO
-export const adminLogin = (req, res) => {
-  res.send('Admin')
+export const adminLogin = async (req, res) => {
+  try {
+    const { error } = userRegisterValidation.validate(req.body)
+    if (error) {
+      return res.status(400).json({
+        status: false,
+        message: error.message,
+      })
+    }
+    const { email, password } = req.body
+
+    //check for admin password
+    if (password !== process.env.ADMIN_PASSWORD) {
+      return res.status(401).json({
+        status: false,
+        message: 'Invalid Credentials',
+      })
+    }
+
+     //check if already exists then return else create new
+    const emailAlreadyExists = await userModel.findOne({ email })
+    if (emailAlreadyExists) {
+      let token = await generateToken(emailAlreadyExists.id)
+      return res.status(201).json({
+        status: 'success',
+        data: {
+          id: emailAlreadyExists.id,
+          email: emailAlreadyExists.email,
+          access_token: token,
+        },
+        message: 'Login Successfully',
+      })
+    }
+
+    const hashedPassword = await hashPassword(password)
+    const user = new userModel({
+      email,
+      password: hashedPassword,
+    })
+    await user.save()
+    if (user) {
+      let token = await generateToken(user.id)
+      return res.status(201).json({
+        status: 'success',
+        data: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          access_token: token,
+        },
+        message: 'Login Successfully Successfully',
+      })
+    }
+  } catch (err) {
+    return res.status(400).json({
+      status: 'failure',
+      message: err.message,
+    })
+  }
 }
