@@ -3,7 +3,7 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import useAuth from '../../hooks/useAuth.js'
 import { useState } from 'react'
-import Loading from '../loading-spinner.jsx'
+import Loading  from "../spinner/loading-spinner.jsx"
 function Form() {
   let emailRegex = new RegExp('[a-z0-9]+@[a-z]+.[a-z]{2,3}')
   const schema = yup.object().shape({

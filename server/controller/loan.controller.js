@@ -17,7 +17,7 @@ export const createLoan = async (req, res) => {
     const { salary, amount, terms, employment } = req.body
     const userId = req.user.id
     const loan = new loanModel({
-      loanId: await generateLoanId(userId),
+      loanId: await generateLoanId(),
       userId,
       salary,
       amount,

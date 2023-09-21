@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import useAdmin from '../hooks/useAdmin'
-import LoanApprovalComponent from '../components/loan-approval-component'
+import LoanApprovalComponent from '../components/loan/loan-approval.component'
 function AdminPage() {
   const { adminLoans, getAllLoansAdmin } = useAdmin()
   const [fetchData, setFetchData] = useState(false)
@@ -13,7 +13,7 @@ function AdminPage() {
   useEffect(() => {
     getLoans()
   }, [fetchData])
-  console.log(adminLoans)
+  
   return (
     <div className="w-full h-screen default-background p-4">
       <div className="w-full flex justify-between">

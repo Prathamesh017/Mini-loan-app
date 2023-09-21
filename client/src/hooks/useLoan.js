@@ -12,6 +12,7 @@ function useLoan() {
           Authorization: `Bearer ${bearerToken}`,
         },
       })
+      
       return
     } catch (error) {
       console.log(error)
@@ -31,7 +32,6 @@ function useLoan() {
       console.log(error)
     }
   }
- 
 
   const updatePayment = async (data) => {
     try {
@@ -42,7 +42,6 @@ function useLoan() {
         },
       })
 
-    
       return
     } catch (error) {
       console.log(error)

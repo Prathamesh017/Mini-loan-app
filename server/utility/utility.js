@@ -30,9 +30,9 @@ export const generateToken = async (id) => {
 
   return token
 }
-export const generateLoanId = async (userId) => {
+export const generateLoanId = async () => {
   try {
-    const orders = (await loanModel.find({ userId })).length + 1
+    const orders = (await loanModel.find({})).length + 1
     const paddedCounter = String(orders).padStart(4, '0')
     return `Loan-${paddedCounter}`
   } catch (error) {

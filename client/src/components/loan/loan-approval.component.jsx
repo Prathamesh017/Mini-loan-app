@@ -1,8 +1,7 @@
 import React from 'react'
-import useAdmin from '../hooks/useAdmin'
+import useAdmin from '../../hooks/useAdmin'
 
 function LoanApprovalComponent({ loans, setFetchData }) {
-  console.log(loans)
   const { approveLoan } = useAdmin()
 
   async function handleApproval(userId, loanId, loan_status) {

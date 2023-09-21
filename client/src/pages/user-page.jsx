@@ -1,23 +1,22 @@
 import React, { useEffect } from 'react'
 import LoanForm from '../components/form/loan-form.component'
 import { useState } from 'react'
-import LoanComponent from '../components/loan.component'
+import LoanComponent from '../components/loan/loan-request.component'
 import useLoan from '../hooks/useLoan'
 import { useNavigate } from 'react-router-dom'
 
 function UserPage() {
   const [showLoan, showSetLoan] = useState(false)
-  const [fetchData,setFetchData]=useState(false)
+  const [fetchData, setFetchData] = useState(false)
   const navigate = useNavigate()
-  const { loans, getAllLoans} = useLoan()
+  const { loans, getAllLoans } = useLoan()
   async function getLoans() {
     await getAllLoans()
-    
   }
   useEffect(() => {
     getLoans()
   }, [fetchData])
-   console.log("loans",loans);
+  
   return (
     <div className="user-page-container w-full h-screen default-background">
       <div className="header-container w-full p-4 flex justify-between">
@@ -42,7 +41,9 @@ function UserPage() {
           </button>
         </div>
       </div>
-      {showLoan && <LoanForm setLoan={showSetLoan} setFetchData={setFetchData} ></LoanForm>}
+      {showLoan && (
+        <LoanForm setLoan={showSetLoan} setFetchData={setFetchData}></LoanForm>
+      )}
       <LoanComponent loans={loans} setFetchData={setFetchData}></LoanComponent>
     </div>
   )

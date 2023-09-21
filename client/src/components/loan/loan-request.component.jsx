@@ -1,8 +1,8 @@
 import React from 'react'
 import { useState } from 'react'
-import PaymentForm from './form/payment-form.component'
+import PaymentForm from '../form/payment-form.component'
 
-function LoanComponent({ loans,setFetchData }) {
+function LoanComponent({ loans, setFetchData }) {
   const [showPaymentForm, setPaymentForm] = useState(false)
   const [selectedLoan, setSelectedLoan] = useState(null)
 
@@ -41,10 +41,10 @@ function LoanComponent({ loans,setFetchData }) {
                   <button
                     type="submit"
                     className="bg-[#4285F4] w-full border text-white hover:text-black p-1 md:p-2"
-                    //!TODO add Pending
+          
                     disabled={
-                      loan.payment_status === 'Paid' ||
-                      loan.loan_status === 'Pending'
+                      loan.payment_status === 'Paid' |
+                      loan.loan_status ===  'Pending'|  loan.loan_status ===  'Rejected'
                         ? true
                         : false
                     }
@@ -65,7 +65,6 @@ function LoanComponent({ loans,setFetchData }) {
             loan={selectedLoan}
             setPaymentForm={setPaymentForm}
             setFetchData={setFetchData}
-            
           ></PaymentForm>
         )}
       </div>

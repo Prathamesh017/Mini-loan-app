@@ -1,0 +1,17 @@
+{
+  "name": "mini-loan-app",
+  "version": "1.0.0",
+  "description": "A Loan App where user can request loan and admins can approve loans",
+  "scripts": {
+    "install-server": "npm install --prefix server",
+    "install-client": "npm install --prefix client",
+    "install": "npm run install-server && npm  run install-client",
+    "server": "npm run start --prefix server",
+    "client": "npm  start --prefix client",
+    "start": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "Prathamesh Thakare",
+  "devDependencies": {
+    "concurrently": "^8.2.1"
+  }
+}
