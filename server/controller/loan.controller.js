@@ -90,7 +90,6 @@ export const addPayment = async (req, res) => {
 
     const payment_status =
       existingLoan[0].amount === updatedPaymentAmount ? 'Paid' : 'Pending'
-    console.log(payment_status)
     const updatedLoan = await loanModel.findByIdAndUpdate(existingLoan[0]._id, {
       payment_terms_paid: payment_terms,
       payment_amount_paid: updatedPaymentAmount,

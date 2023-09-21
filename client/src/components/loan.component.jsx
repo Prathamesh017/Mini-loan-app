@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import PaymentForm from './form/payment-form.component'
 
-function LoanComponent({ loans }) {
+function LoanComponent({ loans,setFetchData }) {
   const [showPaymentForm, setPaymentForm] = useState(false)
   const [selectedLoan, setSelectedLoan] = useState(null)
 
@@ -64,6 +64,8 @@ function LoanComponent({ loans }) {
           <PaymentForm
             loan={selectedLoan}
             setPaymentForm={setPaymentForm}
+            setFetchData={setFetchData}
+            
           ></PaymentForm>
         )}
       </div>

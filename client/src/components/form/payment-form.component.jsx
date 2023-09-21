@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import useLoan from '../../hooks/useLoan'
-function PaymentForm({ setPaymentForm, loan }) {
+function PaymentForm({ setPaymentForm, loan, setFetchData }) {
   const schema = yup.object().shape({
     terms: yup.number().required('Terms are is Required'),
   })
@@ -24,9 +24,8 @@ function PaymentForm({ setPaymentForm, loan }) {
   })
 
   const [termSelected, setTermSelected] = useState(1)
-  const termsArray = handleRepaymentsTerms(loan.terms-loan.payment_terms_paid)
+  const termsArray = handleRepaymentsTerms(loan.terms - loan.payment_terms_paid)
   const { updatePayment } = useLoan()
-  
 
   return (
     <>
@@ -76,14 +75,16 @@ function PaymentForm({ setPaymentForm, loan }) {
                 type="submit"
                 className="bg-[#ffd700]  w-full border text-white hover:text-black p-1 md:p-2"
                 onClick={handleSubmit(async (data) => {
-                  
                   let userData = {
-                    payment_terms: loan.payment_terms_paid+data.terms,
-                    payment_amount:Math.round((loan.amount / loan.terms) * termSelected),
+                    payment_terms: loan.payment_terms_paid + data.terms,
+                    payment_amount: Math.round(
+                      (loan.amount / loan.terms) * termSelected,
+                    ),
                     loanId: loan.loanId,
                     userId: loan.userId,
                   }
                   await updatePayment(userData)
+                  setFetchData((val) => !val)
                 })}
               >
                 Submit

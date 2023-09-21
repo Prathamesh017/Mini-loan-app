@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import useLoan from '../../hooks/useLoan.js'
-function LoanForm({ setLoan }) {
+function LoanForm({ setLoan, setFetchData }) {
   const schema = yup.object().shape({
     employment: yup.string().required('Employment Status is required'),
     terms: yup.number().required('Loan Term is required'),
@@ -134,6 +134,7 @@ function LoanForm({ setLoan }) {
                 className="bg-[#ffd700]  w-full border text-white hover:text-black p-1 md:p-2"
                 onClick={handleSubmit(async (data) => {
                   await createLoan(data)
+                  setFetchData((val)=>!val)
                 })}
               >
                 Submit

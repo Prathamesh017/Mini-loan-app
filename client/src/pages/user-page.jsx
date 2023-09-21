@@ -7,15 +7,17 @@ import { useNavigate } from 'react-router-dom'
 
 function UserPage() {
   const [showLoan, showSetLoan] = useState(false)
-  const { loans, getAllLoans } = useLoan()
+  const { loans, getAllLoans} = useLoan()
+  const [fetchData,setFetchData]=useState(false)
   const navigate = useNavigate()
   async function getLoans() {
     await getAllLoans()
+    
   }
   useEffect(() => {
     getLoans()
-  }, [])
-
+  }, [fetchData])
+   console.log("loans",loans);
   return (
     <div className="user-page-container w-full h-screen default-background">
       <div className="header-container w-full p-4 flex justify-between">
@@ -40,8 +42,8 @@ function UserPage() {
           </button>
         </div>
       </div>
-      {showLoan && <LoanForm setLoan={showSetLoan}></LoanForm>}
-      <LoanComponent loans={loans}></LoanComponent>
+      {showLoan && <LoanForm setLoan={showSetLoan} setFetchData={setFetchData} ></LoanForm>}
+      <LoanComponent loans={loans} setFetchData={setFetchData}></LoanComponent>
     </div>
   )
 }

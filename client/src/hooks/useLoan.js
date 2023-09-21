@@ -12,9 +12,9 @@ function useLoan() {
           Authorization: `Bearer ${bearerToken}`,
         },
       })
-
-      const updatedLoans = await getAllLoans()
-      setLoans(updatedLoans)
+      await getAllLoans()
+      // const updatedLoans = await getAllLoans()
+      // setLoans(updatedLoans)
       return
     } catch (error) {
       console.log(error)
@@ -34,6 +34,7 @@ function useLoan() {
       console.log(error)
     }
   }
+ 
 
   const updatePayment = async (data) => {
     try {
@@ -55,7 +56,8 @@ function useLoan() {
     loans,
     createLoan,
     getAllLoans,
-    updatePayment
+    updatePayment,
+    // updateLoan
   }
 }
 
